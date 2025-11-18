@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: EventCatalog - Development
+
+logging:
+  level:
+    root: INFO
