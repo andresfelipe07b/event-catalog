@@ -1,6 +1,7 @@
 package org.riwi.eventcatalog.service.impl;
 
 import org.riwi.eventcatalog.dto.VenueDto;
+import org.riwi.eventcatalog.exception.ResourceNotFoundException;
 import org.riwi.eventcatalog.repository.VenueRepository;
 import org.riwi.eventcatalog.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +30,20 @@ public class VenueServiceImpl implements IService<VenueDto> {
 
     @Override
     public VenueDto findById(Long id) {
-        return venueRepository.findById(id).orElse(null);
+        return venueRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Venue not found with ID: " + id));
     }
 
     @Override
     public VenueDto update(Long id, VenueDto venue) {
-        VenueDto existingVenue = findById(id);
-        if (existingVenue != null) {
-            venue.setId(id);
-            return venueRepository.save(venue);
-        }
-        return null;
+        findById(id);
+        venue.setId(id);
+        return venueRepository.save(venue);
     }
 
     @Override
     public void delete(Long id) {
+        findById(id);
         venueRepository.delete(id);
-
     }
 }
