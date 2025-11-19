@@ -1,12 +1,14 @@
 package org.riwi.eventcatalog.repository;
 
 import org.riwi.eventcatalog.dto.VenueDto;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Repository
 public class VenueRepository implements IRepository<VenueDto> {
     private final List<VenueDto> venues = new ArrayList<>();
     private final AtomicLong idCounter = new AtomicLong(1);

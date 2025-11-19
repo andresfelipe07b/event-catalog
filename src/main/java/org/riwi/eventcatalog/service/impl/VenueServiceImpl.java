@@ -3,12 +3,16 @@ package org.riwi.eventcatalog.service.impl;
 import org.riwi.eventcatalog.dto.VenueDto;
 import org.riwi.eventcatalog.repository.VenueRepository;
 import org.riwi.eventcatalog.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class VenueServiceImpl implements IService<VenueDto> {
     private final VenueRepository venueRepository;
 
+    @Autowired
     public VenueServiceImpl(VenueRepository venueRepository) {
         this.venueRepository = venueRepository;
     }
