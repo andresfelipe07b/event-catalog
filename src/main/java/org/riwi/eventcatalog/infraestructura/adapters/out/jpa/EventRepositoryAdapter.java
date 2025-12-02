@@ -49,7 +49,7 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     @Override
     public List<Event> findAllByCriteria(EventSearchCriteria criteria) {
         return eventJpaRepository.findAll(eventSpecification.getEventsByCriteria(
-                        criteria.getCity(), criteria.getCategory(), criteria.getDate()))
+                        criteria.getCity(), criteria.getCategory(), criteria.getStartDate(), criteria.getEndDate(), criteria.getStatus()))
                 .stream()
                 .map(eventJpaMapper::toDomain)
                 .collect(Collectors.toList());
