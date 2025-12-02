@@ -2,24 +2,27 @@ package org.riwi.eventcatalog.dominio.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 public class Event {
     private String id;
     private String name;
     private LocalDate date;
     private String description;
-    private String category;
+    private EventStatus status;
+    private Set<Category> categories;
     private Venue venue;
 
     public Event() {
     }
 
-    public Event(String id, String name, LocalDate date, String description, String category, Venue venue) {
+    public Event(String id, String name, LocalDate date, String description, EventStatus status, Set<Category> categories, Venue venue) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.description = description;
-        this.category = category;
+        this.status = status;
+        this.categories = categories;
         this.venue = venue;
     }
 
@@ -55,12 +58,20 @@ public class Event {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public EventStatus getStatus() {
+        return status;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setStatus(EventStatus status) {
+        this.status = status;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     public Venue getVenue() {
@@ -91,7 +102,7 @@ public class Event {
                 ", name='" + name + '\'' +
                 ", date=" + date +
                 ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

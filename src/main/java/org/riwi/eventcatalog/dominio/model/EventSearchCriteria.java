@@ -5,13 +5,9 @@ import java.time.LocalDate;
 public class EventSearchCriteria {
     private String city;
     private String category;
-    private LocalDate date;
-
-    public EventSearchCriteria(String city, String category, LocalDate date) {
-        this.city = city;
-        this.category = category;
-        this.date = date;
-    }
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private EventStatus status;
 
     public String getCity() {
         return city;
@@ -29,11 +25,27 @@ public class EventSearchCriteria {
         this.category = category;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public EventStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EventStatus status) {
+        this.status = status;
     }
 }
