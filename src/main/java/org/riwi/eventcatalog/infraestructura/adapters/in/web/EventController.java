@@ -9,12 +9,9 @@ import org.riwi.eventcatalog.infraestructura.adapters.in.web.dto.EventRequest;
 import org.riwi.eventcatalog.infraestructura.adapters.in.web.dto.EventResponse;
 import org.riwi.eventcatalog.infraestructura.adapters.in.web.mapper.EventDtoMapper;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Pageable; // Necesario para @ParameterObject Pageable
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,12 +31,7 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EventResponse>> getAll(
-            @RequestParam(required = false) String city,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-
-        EventSearchCriteria criteria = new EventSearchCriteria(city, category, date);
+    public ResponseEntity<List<EventResponse>> getAll(@ParameterObject EventSearchCriteria criteria) {
         List<Event> events = eventUseCase.getAllEventsByCriteria(criteria);
         List<EventResponse> response = events.stream()
                 .map(eventDtoMapper::toResponse)
