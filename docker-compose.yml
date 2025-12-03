@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000" # Mapea el puerto 9000 del host al puerto 9000 del contenedor
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/eventcatalog_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      JWT_SECRET: your-super-secret-key-that-is-long-enough-for-hs256
+      JWT_EXPIRATION: 86400000
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - db
+    networks:
+      - event-catalog-network
+
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: eventcatalog_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - event-catalog-network
+
+  gateway:
+    build:
+      context: ./gateway-service # Ruta al Dockerfile del Gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080" # CAMBIO AQUÍ: Mapea el puerto 8081 del host al 8080 del contenedor
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - app # El Gateway depende de que la aplicación principal esté levantada
+    networks:
+      - event-catalog-network
+
+networks:
+  event-catalog-network:
+    driver: bridge
+
+volumes:
+  db-data:

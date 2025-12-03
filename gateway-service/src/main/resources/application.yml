@@ -1,0 +1,13 @@
+server:
+  port: 8080 # El Gateway escuchará en el puerto 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: event-catalog-route
+          uri: http://event-catalog-app:9000 # El nombre del servicio de la app en docker-compose
+          predicates:
+            - Path=/events/**, /venues/**, /auth/**, /swagger-ui/**, /v3/api-docs/**
